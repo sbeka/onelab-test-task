@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{modalTitle}}</h2>
+<mat-dialog-content>
+    
+    <form [formGroup]="itemForm" (submit)="action()">
+        <mat-form-field>
+            <mat-label>Категория</mat-label>
+            <mat-select formControlName="category">
+                <mat-option value="1">Категория 1</mat-option>
+                <mat-option value="2">Категория 2</mat-option>
+                <mat-option value="3">Категория 3</mat-option>
+                <mat-option value="4">Категория 4</mat-option>
+                <mat-option value="5">Категория 5</mat-option>
+            </mat-select>
+            <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert alert-error">
+                <p *ngIf="category.errors.required">Выберите категорию</p>
+                <!--<p *ngIf="category.errors.minlength">First name be at least 5 characters long.</p>-->
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Название</mat-label>
+            <input matInput placeholder="Введите название" formControlName="name">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-error">
+                <p *ngIf="name.errors.required">Введите название</p>
+                <p *ngIf="name.errors.minlength">Не менее 5 символов.</p>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Закупочная стоимость</mat-label>
+            <input type="number" matInput placeholder="Закупочная стоимость" formControlName="price_purchase">
+            <div *ngIf="price_purchase.invalid && (price_purchase.dirty || price_purchase.touched)" class="alert alert-error">
+                <p *ngIf="price_purchase.errors.required">Обязательное поле</p>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Розничная цена</mat-label>
+            <input type="number" matInput placeholder="Розничная цена" formControlName="price_sale">
+            <div *ngIf="price_sale.invalid && (price_sale.dirty || price_sale.touched)" class="alert alert-error">
+                <p *ngIf="price_sale.errors.required">Обязательное поле</p>
+            </div>
+        </mat-form-field>
+    </form>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button *ngIf="idItem === null" [disabled]="itemForm.invalid" mat-button (click)="add()">Сохранить</button>
+    <button *ngIf="idItem !== null" [disabled]="itemForm.invalid" mat-button (click)="edit()">Изменить</button>
+    <button mat-button mat-dialog-close>Отмена</button>
+</mat-dialog-actions>

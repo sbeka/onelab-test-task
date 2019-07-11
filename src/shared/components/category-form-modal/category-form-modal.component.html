@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Добавить категорию</h2>
+<mat-dialog-content>
+
+    <form [formGroup]="form" (submit)="add()">
+        <mat-form-field>
+            <mat-label>Название</mat-label>
+            <input matInput placeholder="Введите название" formControlName="name">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-error">
+                <p *ngIf="name.errors.required">Введите название</p>
+                <p *ngIf="name.errors.minlength">Не менее 5 символов.</p>
+            </div>
+        </mat-form-field>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+    <button [disabled]="form.invalid" mat-button (click)="add()">Сохранить</button>
+    <button mat-button mat-dialog-close>Отмена</button>
+</mat-dialog-actions>
