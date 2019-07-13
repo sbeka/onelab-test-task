@@ -18,11 +18,11 @@ export class ApiService {
         return this.http.post(`${this.apiUrl}/${model}`, data);
     }
 
-    patch(model: string, id: number, data: any): Observable<any> {
+    patch(model: string, id: string, data: any): Observable<any> {
         return this.http.patch(`${this.apiUrl}/${model}/${id}`, data);
     }
 
-    remove(model: string, id: number): Observable<any> {
+    remove(model: string, id: string): Observable<any> {
         return this.http.delete(`${this.apiUrl}/${model}/${id}`);
     }
 }

@@ -16,5 +16,5 @@
 <mat-dialog-actions>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button [disabled]="form.invalid" mat-button (click)="add()">Сохранить</button>
-    <button mat-button mat-dialog-close>Отмена</button>
+    <button mat-button [mat-dialog-close]="false">Отмена</button>
 </mat-dialog-actions>

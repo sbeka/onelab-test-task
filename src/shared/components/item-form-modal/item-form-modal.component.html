@@ -1,15 +1,11 @@
 <h2 mat-dialog-title>{{modalTitle}}</h2>
 <mat-dialog-content>
     
-    <form [formGroup]="itemForm" (submit)="action()">
+    <form [formGroup]="itemForm">
         <mat-form-field>
             <mat-label>Категория</mat-label>
             <mat-select formControlName="category">
-                <mat-option value="1">Категория 1</mat-option>
-                <mat-option value="2">Категория 2</mat-option>
-                <mat-option value="3">Категория 3</mat-option>
-                <mat-option value="4">Категория 4</mat-option>
-                <mat-option value="5">Категория 5</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
             </mat-select>
             <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert alert-error">
                 <p *ngIf="category.errors.required">Выберите категорию</p>
@@ -48,5 +44,5 @@
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button *ngIf="idItem === null" [disabled]="itemForm.invalid" mat-button (click)="add()">Сохранить</button>
     <button *ngIf="idItem !== null" [disabled]="itemForm.invalid" mat-button (click)="edit()">Изменить</button>
-    <button mat-button mat-dialog-close>Отмена</button>
+    <button mat-button [mat-dialog-close]="false">Отмена</button>
 </mat-dialog-actions>

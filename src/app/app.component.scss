@@ -1,20 +1,8 @@
-.example-icon {
-    padding: 0 14px;
-}
-  
-.example-spacer {
-    flex: 1 1 auto;
-}
-
 #container {
     display: grid;
     grid-template-columns: 250px 1fr;
-    height: 500px;
-    #left, #right {
-        outline: 1px solid red;
+    border-bottom: 1px solid #ccc;
+    #left {
+        border-right: 1px solid #ccc;
     }
-}
-
-table {
-    width: 100%;
 }

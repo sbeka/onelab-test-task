@@ -14,7 +14,6 @@ export class MyDialogComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
         this.modalTitle = data.title;
         this.modalSubTitle = data.subtitle;
-        console.log(data);
     }
 
 }

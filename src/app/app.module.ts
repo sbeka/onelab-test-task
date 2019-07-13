@@ -17,13 +17,20 @@ import {HttpClientModule} from '@angular/common/http';
 import {ApiService} from '../core/services/api/api-service';
 import {CategoryService} from '../core/services/api/category-service';
 import {ItemService} from '../core/services/api/item-service';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { ItemsComponent } from './items/items.component';
+import {ModalWindowService} from '../core/services/helpers/modal.window';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MyDialogComponent,
         ItemFormModalComponent,
-        CategoryFormModalComponent
+        CategoryFormModalComponent,
+        SidenavComponent,
+        ItemsComponent,
+        ToolbarComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +49,8 @@ import {ItemService} from '../core/services/api/item-service';
     providers: [
         ApiService,
         CategoryService,
-        ItemService
+        ItemService,
+        ModalWindowService
     ],
     bootstrap: [AppComponent],
     entryComponents: [

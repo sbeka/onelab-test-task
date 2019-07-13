@@ -1,0 +1,11 @@
+<mat-list>
+    <mat-list-item *ngFor="let category of categories">
+        <button mat-icon-button aria-label="delete" color="warn" (click)="deleteCategory(category.id)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-button (click)="changeCategory(category.id)">{{category.name}}</button>
+    </mat-list-item>
+    <mat-list-item>
+        <button mat-button>Без категории</button>
+    </mat-list-item>
+</mat-list>

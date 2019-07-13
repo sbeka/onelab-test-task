@@ -14,15 +14,32 @@ export class ItemService extends ApiService {
         super(http);
     }
 
+    getById(id: string) {
+        return this.get(this.model + '/' + id);
+    }
+
+    getByCategory(categoryId: string) {
+        const filter = {
+            where: {
+                category: categoryId
+            }
+        };
+        return this.get(this.model + '/?filter=' + JSON.stringify(filter));
+    }
+
     list(): Observable<ItemModel> {
         return this.get(this.model);
+    }
+
+    set(id, data: ItemModel): Observable<ItemModel> {
+        return this.patch(this.model, id, data);
     }
 
     add(data: ItemModel): Observable<ItemModel> {
         return this.post(this.model, data);
     }
 
-    del(id: number): Observable<ItemModel> {
+    del(id: string): Observable<ItemModel> {
         return this.remove(this.model, id);
     }
 }

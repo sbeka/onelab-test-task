@@ -14,7 +14,7 @@ export class CategoryService extends ApiService {
         super(http);
     }
 
-    list(): Observable<CategoryModel> {
+    list(): Observable<CategoryModel[]> {
         return this.get(this.model);
     }
 
@@ -22,7 +22,7 @@ export class CategoryService extends ApiService {
         return this.post(this.model, data);
     }
 
-    del(id: number): Observable<CategoryModel> {
+    del(id: string): Observable<CategoryModel> {
         return this.remove(this.model, id);
     }
 }

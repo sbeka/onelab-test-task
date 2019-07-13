@@ -1,84 +1,11 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <span>My Catalog</span>
-        <span class="example-spacer"></span>
-        <button class="example-icon" mat-button (click)="modalWindowFormItem('Добавить товар')">Добавить товар</button>
-        <button class="example-icon" mat-button (click)="modalWindowFormCategory()">Добавить категорию</button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar (addedCategory)="refreshCategories($event)" (addedItem)="refreshItems($event)"></app-toolbar>
 
 <div id="container">
     <div id="left">
-        <mat-list>
-            <mat-list-item>
-                <button mat-icon-button aria-label="delete" color="warn" (click)="deleteCategory()">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-button>Category 1</button>
-            </mat-list-item>
-            <mat-list-item>
-                <button mat-icon-button aria-label="delete" color="warn">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-button>Category 2</button>
-            </mat-list-item>
-            <mat-list-item>
-                <button mat-icon-button aria-label="delete" color="warn">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-button>Category 3</button>
-            </mat-list-item>
-            <mat-list-item>
-                <button mat-button>Без категории</button>
-            </mat-list-item>
-        </mat-list>
+        <app-sidenav [categories]="categories" (deleted)="refreshCategories($event)" (changedCategory)="getItemsByCategory($event)"></app-sidenav>
     </div>
     <div id="right">
-        <table mat-table [dataSource]="dataSource">
-
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-
-            <!-- Position Column -->
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef> ID </th>
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Названия товара </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="price_purchase">
-                <th mat-header-cell *matHeaderCellDef> Цена / закуп </th>
-                <td mat-cell *matCellDef="let element"> {{element.price_purchase}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="price_sale">
-                <th mat-header-cell *matHeaderCellDef> Цена </th>
-                <td mat-cell *matCellDef="let element"> {{element.price_sale}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef> Действие </th>
-                <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button aria-label="delete" color="warn" (click)="deleteItem()">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                    <button mat-icon-button aria-label="edit" color="primary" (click)="editItem('123')">
-                        <mat-icon>edit</mat-icon>
-                    </button>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+        <app-items [items]="items"></app-items>
     </div>
 </div>
 

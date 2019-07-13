@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MatDialogRef} from '@angular/material';
+import {CategoryService} from '../../../core/services/api/category-service';
 
 @Component({
   selector: 'app-category-form-modal',
@@ -17,11 +18,17 @@ export class CategoryFormModalComponent {
     get name() { return this.form.get('name'); }
 
 
-    constructor(public dialogRef: MatDialogRef<any>) {}
+    constructor(
+        public dialogRef: MatDialogRef<any>,
+        private categoryService: CategoryService
+    ) {}
 
     add() {
-        console.log(this.form.value);
-        // this.dialogRef.close();
+        this.categoryService
+            .add(this.form.value)
+            .subscribe(res => {
+                this.dialogRef.close(true);
+            });
     }
 
 }
