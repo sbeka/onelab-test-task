@@ -5,6 +5,7 @@
         <mat-form-field>
             <mat-label>Категория</mat-label>
             <mat-select formControlName="category">
+                <mat-option value="0">Без категории</mat-option>
                 <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
             </mat-select>
             <div *ngIf="category.invalid && (category.dirty || category.touched)" class="alert alert-error">

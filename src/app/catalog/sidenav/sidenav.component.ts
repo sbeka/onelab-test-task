@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ModalWindowService} from '../../core/services/helpers/modal.window';
 import {CategoryModel} from '../../core/interfaces/category.model';
 import {CategoryService} from '../../core/services/api/category-service';
+import {ItemService} from '../../core/services/api/item-service';
+import {ItemModel} from '../../core/interfaces';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-sidenav',
@@ -16,7 +19,8 @@ export class SidenavComponent implements OnInit {
 
     constructor(
         public modalService: ModalWindowService,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private itemService: ItemService
     ) {}
 
     ngOnInit() {}
@@ -26,9 +30,25 @@ export class SidenavComponent implements OnInit {
             .modalWindow('Хотите удалить категорию?', 'Все товары в этой категории будут помечены "Без категории"')
             .subscribe(result => {
                 if (result) {
+                    this.modalService.presentLoader();
                     this.categoryService
                         .del(id)
-                        .subscribe(res => this.deleted.emit(true));
+                        .toPromise()
+                        .then(() => this.itemService.getByCategory(id).toPromise())
+                        .then((items: ItemModel[]) => {
+                            if (items.length) {
+                                const requestArray = [];
+                                for (const item of items) {
+                                    requestArray.push(this.itemService.set(item.id, {category: '0'}));
+                                }
+                                return forkJoin(requestArray).toPromise();
+                            }
+                        })
+                        .then(() => {
+                            this.deleted.emit(true);
+                            this.modalService.dismissLoader();
+                        })
+                        .catch(() => this.modalService.dismissLoader());
                 }
             });
     }

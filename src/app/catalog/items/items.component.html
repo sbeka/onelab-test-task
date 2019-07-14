@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="items">
+<table *ngIf="items.length" mat-table [dataSource]="items">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -37,3 +37,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<div class="no-data" *ngIf="!items.length">Нет данных</div>

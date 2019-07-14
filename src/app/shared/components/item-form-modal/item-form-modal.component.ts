@@ -61,13 +61,19 @@ export class ItemFormModalComponent implements OnInit {
     add() {
         this.itemService
             .add(this.itemForm.value)
-            .subscribe(() => this.dialogRef.close(true));
+            .subscribe(
+                () => this.dialogRef.close(true),
+                () => this.dialogRef.close(false)
+            );
     }
 
     edit() {
         this.itemService
             .set(this.idItem, this.itemForm.value)
-            .subscribe(() => this.dialogRef.close(true));
+            .subscribe(
+                () => this.dialogRef.close(true),
+                () => this.dialogRef.close(false)
+            );
     }
 
 }

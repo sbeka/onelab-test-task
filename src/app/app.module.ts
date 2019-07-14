@@ -1,26 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatInputModule} from '@angular/material';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTableModule} from '@angular/material/table';
-import {MatListModule} from '@angular/material/list';
-import {MatSelectModule} from '@angular/material/select';
-import { MyDialogComponent } from '../shared/components/my-dialog/my-dialog.component';
-import { ItemFormModalComponent } from '../shared/components/item-form-modal/item-form-modal.component';
+import { MyDialogComponent } from './shared/components/my-dialog/my-dialog.component';
+import { ItemFormModalComponent } from './shared/components/item-form-modal/item-form-modal.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { CategoryFormModalComponent } from '../shared/components/category-form-modal/category-form-modal.component';
+import { CategoryFormModalComponent } from './shared/components/category-form-modal/category-form-modal.component';
 import {HttpClientModule} from '@angular/common/http';
-import {ApiService} from '../core/services/api/api-service';
-import {CategoryService} from '../core/services/api/category-service';
-import {ItemService} from '../core/services/api/item-service';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { ItemsComponent } from './items/items.component';
-import {ModalWindowService} from '../core/services/helpers/modal.window';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import {ApiService} from './core/services/api/api-service';
+import {ModalWindowService} from './core/services/helpers/modal.window';
+import {
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatIconModule, MatInputModule,
+    MatListModule, MatProgressSpinnerModule, MatSelectModule,
+    MatTableModule,
+    MatToolbarModule
+} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SidenavComponent} from './catalog/sidenav/sidenav.component';
+import {ItemsComponent} from './catalog/items/items.component';
+import {ToolbarComponent} from './catalog/toolbar/toolbar.component';
+import {CategoryService} from './core/services/api/category-service';
+import {ItemService} from './core/services/api/item-service';
+import {LoaderModalComponent} from './shared/components/loader-modal/loader-modal.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +32,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
         MyDialogComponent,
         ItemFormModalComponent,
         CategoryFormModalComponent,
+        LoaderModalComponent,
         SidenavComponent,
         ItemsComponent,
         ToolbarComponent
@@ -35,28 +40,32 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatDialogModule,
         BrowserAnimationsModule,
-        MatButtonModule, MatCheckboxModule, MatToolbarModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatToolbarModule,
         MatIconModule,
         MatListModule,
         MatTableModule,
-        MatDialogModule,
         MatSelectModule,
         MatInputModule,
-        ReactiveFormsModule,
-        HttpClientModule
+        MatProgressSpinnerModule
     ],
     providers: [
         ApiService,
+        ModalWindowService,
         CategoryService,
-        ItemService,
-        ModalWindowService
+        ItemService
     ],
     bootstrap: [AppComponent],
     entryComponents: [
         MyDialogComponent,
         ItemFormModalComponent,
-        CategoryFormModalComponent
+        CategoryFormModalComponent,
+        LoaderModalComponent
     ]
 })
 export class AppModule { }

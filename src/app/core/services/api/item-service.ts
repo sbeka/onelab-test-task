@@ -27,11 +27,11 @@ export class ItemService extends ApiService {
         return this.get(this.model + '/?filter=' + JSON.stringify(filter));
     }
 
-    list(): Observable<ItemModel> {
+    list(): Observable<ItemModel[]> {
         return this.get(this.model);
     }
 
-    set(id, data: ItemModel): Observable<ItemModel> {
+    set(id, data: any): Observable<ItemModel> {
         return this.patch(this.model, id, data);
     }
 

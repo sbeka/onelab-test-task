@@ -9,6 +9,7 @@ import {CategoryModel} from '../../interfaces/category.model';
 export class CategoryService extends ApiService {
 
     model = 'category';
+    selected = '0';
 
     constructor(public http: HttpClient) {
         super(http);

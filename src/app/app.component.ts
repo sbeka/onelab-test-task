@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoryService} from '../core/services/api/category-service';
-import {CategoryModel} from '../core/interfaces/category.model';
-import {ItemService} from '../core/services/api/item-service';
-import {ItemModel} from '../core/interfaces';
+import {CategoryModel} from './core/interfaces/category.model';
+import {ItemModel} from './core/interfaces';
+import {CategoryService} from './core/services/api/category-service';
+import {ItemService} from './core/services/api/item-service';
+import {ModalWindowService} from './core/services/helpers/modal.window';
+import {forkJoin} from 'rxjs';
 
 
 @Component({
@@ -17,39 +19,64 @@ export class AppComponent implements OnInit {
 
     constructor(
         private categoryService: CategoryService,
-        private itemService: ItemService
-    ) {}
+        private itemService: ItemService,
+        private modalService: ModalWindowService
+    ) {
+        this.categories = [];
+        this.items = [];
+    }
 
-    ngOnInit(): void {
-        this.categoryService
-            .list()
-            .subscribe((res: any) => this.categories = res);
-        this.itemService
-            .list()
-            .subscribe((res: any) => this.items = res);
+    ngOnInit() {
+        this.modalService.presentLoader();
+        forkJoin(
+            this.categoryService.list(),
+            this.itemService.getByCategory(this.categoryService.selected)
+        ).subscribe((results) => {
+            this.categories = results[0];
+            this.items = results[1];
+            this.modalService.dismissLoader();
+        });
     }
 
     refreshCategories(result) {
         if (result) {
             this.categoryService
                 .list()
-                .subscribe((res: any) => this.categories = res);
+                .subscribe(
+                    (res: any) => {
+                        this.categories = res;
+                    }
+                );
         }
     }
 
     refreshItems(result) {
         if (result) {
+            this.modalService.presentLoader();
             this.itemService
-                .list()
-                .subscribe((res: any) => this.items = res);
+                .getByCategory(this.categoryService.selected)
+                .subscribe(
+                    (res: any) => {
+                        this.items = res;
+                        this.modalService.dismissLoader();
+                    },
+                    () => this.modalService.dismissLoader()
+                );
         }
     }
 
     getItemsByCategory(event) {
-        console.log(event);
+        this.modalService.presentLoader();
+        this.categoryService.selected = event;
         this.itemService
             .getByCategory(event)
-            .subscribe((res: any) => this.items = res);
+            .subscribe(
+                (res: any) => {
+                    this.items = res;
+                    this.modalService.dismissLoader();
+                },
+                () => this.modalService.dismissLoader()
+            );
     }
 
 }
